@@ -20,20 +20,8 @@
     index_var: gitlab_runner_index
     loop_var: gitlab_runner
 
-- name: Install Gitlab Runner (Container)
-  vars:
-    gitlab_install_target_platform: container
-  ansible.builtin.include_tasks: main-container.yml
-  when: gitlab_runner_container_install
-
 - name: Install GitLab Runner (Unix)
   vars:
     gitlab_install_target_platform: unix
   ansible.builtin.include_tasks: main-unix.yml
   when: ansible_os_family != 'Windows' and not gitlab_runner_container_install
-
-- name: Install GitLab Runner (Windows)
-  vars:
-    gitlab_install_target_platform: windows
-  ansible.builtin.include_tasks: main-windows.yml
-  when: ansible_os_family == 'Windows' and not gitlab_runner_container_install
